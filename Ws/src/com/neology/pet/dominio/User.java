@@ -6,12 +6,15 @@
 package com.neology.pet.dominio;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author SergioToshiba
  */
 public class User implements Serializable {
+
     private static final long serialVersionUID = -3131167321153533340L;
     private Integer idUser;
     private String firstName;
@@ -21,6 +24,8 @@ public class User implements Serializable {
     private String email;
     private Integer enabled;
     private UserRole idUserRole;
+    private Date fechaRegistro;
+    private Boolean autenticado;
 
     /**
      * @return the idUser
@@ -133,4 +138,33 @@ public class User implements Serializable {
     public void setIdUserRole(UserRole idUserRole) {
         this.idUserRole = idUserRole;
     }
+
+    /**
+     * @return the fechaRegistro
+     */
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    /**
+     * @param fechaRegistro the fechaRegistro to set
+     */
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    /**
+     * @return the autenticado
+     */
+    public Boolean getAutenticado() {
+        return autenticado;
+    }
+
+    /**
+     * @param autenticado the autenticado to set
+     */
+    public void setAutenticado(Boolean autenticado) {
+        this.autenticado = autenticado;
+    }
+
 }

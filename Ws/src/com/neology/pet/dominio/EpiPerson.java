@@ -1,19 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+ * Todos los Derechos Reservados © 2015 Neology
+ * Sistema Integral de Enrolamiento.
+ * Este software contiene información propiedad exclusiva de Neology considerada Confidencial.
+ * Queda totalmente prohibido su uso o divulgación en forma parcial o total.
+ * -----------------------------------------------------------------------------------------------------------------
+ * Sitio web: http://www.neology-rfid.com
+ * Nombre de Aplicacion: Programa de Empleo Temporal
+ * Nombre de archivo: EpiPerson.java
+ * Fecha de creacion: 2015
+ * @author: Sergio Alberto Cortés Rios
+ * @version 1.0
+ *
+ * Bitácora de modificaciones:
+ * CR/Defecto    Fecha             Autor 			Descripción del cambio
+ * -----------------------------------------------------------------------------------------------------------------
+**/
 package com.neology.pet.dominio;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 /**
  *
- * @author SergioToshiba
+ * @author Sergio Alberto Cortés Rios
  */
-public class EpiPerson {
-
-//    private static final long serialVersionUID = -2829212410123637323L;
+public class EpiPerson implements Serializable {
+    private static final long serialVersionUID = -2829212410123637323L;
     private String personID;
     private String strNumeroPersonal;
     private Date creationDate;
@@ -65,8 +78,6 @@ public class EpiPerson {
     private List<GaImage> imagenes;
     private String mensaje;
     private TblRegistros registro;
-    private Double dLatitud;
-    private Double dLongitude;
 
     /**
      * @return the personID
@@ -768,35 +779,6 @@ public class EpiPerson {
         this.mensaje = mensaje;
     }
 
-
-    /**
-     * @return the dLatitud
-     */
-    public Double getdLatitud() {
-        return dLatitud;
-    }
-
-    /**
-     * @param dLatitud the dLatitud to set
-     */
-    public void setdLatitud(Double dLatitud) {
-        this.dLatitud = dLatitud;
-    }
-
-    /**
-     * @return the dLongitude
-     */
-    public Double getdLongitude() {
-        return dLongitude;
-    }
-
-    /**
-     * @param dLongitude the dLongitude to set
-     */
-    public void setdLongitude(Double dLongitude) {
-        this.dLongitude = dLongitude;
-    }
-
     /**
      * @return the registro
      */
@@ -810,4 +792,5 @@ public class EpiPerson {
     public void setRegistro(TblRegistros registro) {
         this.registro = registro;
     }
+
 }

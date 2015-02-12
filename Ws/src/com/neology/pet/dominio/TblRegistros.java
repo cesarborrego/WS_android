@@ -1,19 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+ * Todos los Derechos Reservados © 2015 Neology
+ * Sistema Integral de Enrolamiento.
+ * Este software contiene información propiedad exclusiva de Neology considerada Confidencial.
+ * Queda totalmente prohibido su uso o divulgación en forma parcial o total.
+ * -----------------------------------------------------------------------------------------------------------------
+ * Sitio web: http://www.neology-rfid.com
+ * Nombre de Aplicacion: Programa de Empleo Temporal
+ * Nombre de archivo: TblRegistros.java
+ * Fecha de creacion: 2015
+ * @author: Sergio Alberto Cortés Rios
+ * @version 1.0
+ *
+ * Bitácora de modificaciones:
+ * CR/Defecto    Fecha             Autor 			Descripción del cambio
+ * -----------------------------------------------------------------------------------------------------------------
+**/
 package com.neology.pet.dominio;
 
 import java.io.Serializable;
 import java.util.Date;
-
 /**
  *
- * @author SergioToshiba
+ * @author Sergio Alberto Cortés Rios
  */
 public class TblRegistros implements Serializable {
-
     private static final long serialVersionUID = -5131742315123939393L;
     private Long intIdRegistro;
     private Date dtmFechaEmision;
@@ -120,4 +130,5 @@ public class TblRegistros implements Serializable {
     public void setIntIdModulo(TblModulos intIdModulo) {
         this.intIdModulo = intIdModulo;
     }
+
 }

@@ -21,23 +21,20 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.neology.pet.dominio.EpiPerson;
 import com.neology.pet.dominio.Generic;
+import com.neology.pet.dominio.TblAsistencias;
+import com.neology.pet.dominio.TblAsociacionBeneficiarios;
 
 public class MainActivity extends ActionBarActivity {
 	//IMAGEN
 	private static final String KEY_BLOB_IMG = "lstImages";
 	private static final String KEY_TYPE_IMG = "image_Type";
 	private static final String KEY_BLOB_SGM = "blob_Segment";
+	
+	public static final int INSERTA_UBICACION = 0;
+	public static final int CATALOGO_PROGRAMAS = 1;
+	public static final int CONSULTA_ASISTENCIAS = 2;
 
-	// Metodo que queremos ejecutar en el servicio web
-	private static final String metodo = "insertaUbicacion";
-	// Namespace definido en el servicio web
-	private static final String namespace = "http://iface.service.web.pet.neology.com/";
-	// namespace + metodo
-	//private static final String actionSoap = namespace+metodo;
-	private static final String actionSoap = "";
-	// Fichero de definicion del servcio web
-//	private static final String url = "http://162.144.86.163:8086/Sie/wsUbicacion?wsdl";
-	private static final String url = "http://192.168.32.78:8080/Sie/services/wsUbicacion";
+
 
 	Button btn;
 
@@ -50,76 +47,56 @@ public class MainActivity extends ActionBarActivity {
 
 			@Override
 			public void onClick(View v) {
-				wsSoap();
+				wsSoap(INSERTA_UBICACION);
 			}
 		});
 
 	}
-	
-	public void wsSoap(){
-		wsAsync wsaAsync = new wsAsync();
-		wsaAsync.execute();
-	}
-	
-	public class wsAsync extends AsyncTask<Void, Void, String> {
-		@Override
-		protected String doInBackground(Void... params) {
-			try {
-				Generic dominio = null;
-				EpiPerson ep = null;
-				SoapObject request = new SoapObject(namespace, metodo);
-				dominio = new Generic();
-				ep = new EpiPerson();
-				ep.setPersonID("5600456659");
-				ep.setdLatitud(102.5);
-				ep.setdLongitude(12.5);
-				PropertyInfo genEpi = new PropertyInfo();
-				genEpi.setName("objeto");
-				genEpi.setValue(ep);
-				genEpi.setType(EpiPerson.class);
-				String gson = new Gson().toJson(ep);
-				dominio.setObjeto(gson);
-				//dominio.setObjeto("<EpiPerson><personID>5600456659</personID><dLatitud>1.2</dLatitud><dLongitude>2.3</dLongitude></EpiPerson>");
-				System.out.println("Data: "+dominio.getObjeto());
-				
-				PropertyInfo genProperty = new PropertyInfo();
-				genProperty.setName("arg0");
-				genProperty.setValue(dominio);
-				genProperty.setType(Generic.class);
-				request.addProperty(genProperty);
-				SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-				soapEnvelope.setOutputSoapObject(request);
-				
-				soapEnvelope.addMapping(namespace, "Generic", dominio.getClass());
-				
-				Auth transport = new Auth(url, "petAdmin", "Admin2o15");
-				
-				try {
-					transport.debug = true;
-					Log.i("Examples", "Connecting to internet...");
-					transport.call(actionSoap, soapEnvelope);
-					Log.d("dump Request: " ,transport.requestDump);
-					Log.d("dump response: " ,transport.responseDump);
-					Object response = soapEnvelope.bodyIn;
-					Log.i("Examples", "Result:"+response); 
-				} catch (Exception e) {
-					Log.e("Examples", e.getMessage());
-				    e.printStackTrace();
-				}			
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			return "";
+
+	public void wsSoap(int typeConsult){
+		switch (typeConsult) {
+		case INSERTA_UBICACION:
+			insertaUbicacionParams();
+			break;
+
+		case CATALOGO_PROGRAMAS:
+			catalogoProgramas();
+			break;
+			
+		case CONSULTA_ASISTENCIAS:
+			break;
 		}
-		
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			Log.d("RESULT", result);
-		}		
 	}
 	
+	private void insertaUbicacionParams() {
+		TblAsistencias ep = null;
+		TblAsociacionBeneficiarios tb = null;
+		EpiPerson p = null;
+		ep = new TblAsistencias();
+		tb = new TblAsociacionBeneficiarios();
+		p = new EpiPerson();
+		p.setPersonID("5600456659");
+		tb.setPersonID(p);
+		//		ep.setBeneficiarioID("5600456659");
+		ep.setBeneficiarioID(tb);
+		ep.setLatitud(102.5);
+		ep.setLongitud(12.5);
+		ep.setAsistenciaID(1);
+
+		WsInsertaUbicacion wsaAsync = new WsInsertaUbicacion();
+		wsaAsync.execute(ep);
+	}
 	
+	private void catalogoProgramas() {
+		Generic dominio = new Generic();
+		dominio.setFirst(0);
+		dominio.setPageSize(1);
+		
+		WsConsultaCatalogoProgramas ws = new WsConsultaCatalogoProgramas();
+		ws.execute(dominio);
+	}
+
+
 	public void ws(){
 		AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
 		asyncHttpClient.setBasicAuth("alex", "admin");

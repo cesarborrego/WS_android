@@ -7,6 +7,7 @@ package com.neology.pet.dominio;
 
 import java.io.Serializable;
 import java.util.Date;
+
 /**
  *
  * @author SergioToshiba
